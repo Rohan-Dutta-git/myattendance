@@ -1,4 +1,5 @@
 
+
 const CACHE_NAME = 'attendance-tracker-cache-v2';
 const URLS_TO_CACHE = [
   '/',
@@ -14,9 +15,7 @@ const URLS_TO_CACHE = [
   '/components/BottomNav.tsx',
   '/components/CalendarView.tsx',
   '/components/Dashboard.tsx',
-  '/components/NotificationPermissionBanner.tsx',
   '/components/icons/AddIcon.tsx',
-  '/components/icons/BellIcon.tsx',
   '/components/icons/CalendarIcon.tsx',
   '/components/icons/CheckIcon.tsx',
   '/components/icons/CrossIcon.tsx',
@@ -112,41 +111,4 @@ self.addEventListener('fetch', (event) => {
             });
         })
     );
-});
-
-
-// This service worker also handles notification clicks.
-self.addEventListener('notificationclick', (event) => {
-  // Close the notification once an action is taken.
-  event.notification.close();
-
-  const subjectId = event.notification.data.subjectId;
-  const action = event.action; // 'present' or 'absent'
-
-  // If required data is missing, do nothing.
-  if (!subjectId || !action) {
-    return;
-  }
-
-  // Determine the attendance status based on the action clicked.
-  const status = action === 'present' ? 'PRESENT' : 'ABSENT';
-
-  // Find all active client windows/tabs and send them a message
-  // to update the attendance data.
-  event.waitUntil(
-    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
-      if (!clients || clients.length === 0) {
-        return;
-      }
-      clients.forEach((client) => {
-        if ('focus' in client) {
-          client.focus();
-        }
-        client.postMessage({
-          subjectId: subjectId,
-          status: status,
-        });
-      });
-    })
-  );
 });

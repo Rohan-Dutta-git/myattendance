@@ -16,8 +16,8 @@ const NavItem: React.FC<{
   isActive: boolean;
   onClick: () => void;
 }> = ({ label, icon, isActive, onClick }) => {
-  const activeClasses = 'text-sky-400';
-  const inactiveClasses = 'text-slate-400';
+  const activeClasses = 'text-sky-500 dark:text-sky-400';
+  const inactiveClasses = 'text-slate-500 dark:text-slate-400 hover:text-sky-500 dark:hover:text-sky-400';
   return (
     <button
       onClick={onClick}
@@ -33,7 +33,7 @@ const NavItem: React.FC<{
 
 const BottomNav: React.FC<BottomNavProps> = ({ activeView, setActiveView }) => {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-slate-800 border-t border-slate-700 flex justify-around shadow-lg">
+    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 flex justify-around shadow-lg">
       <NavItem
         label="Dashboard"
         icon={<DashboardIcon className="w-6 h-6" />}

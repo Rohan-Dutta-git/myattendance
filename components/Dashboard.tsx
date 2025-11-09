@@ -3,15 +3,12 @@ import { Subject, AttendanceRecord, AttendanceStatus, DayOfWeek } from '../types
 import CheckIcon from './icons/CheckIcon';
 import CrossIcon from './icons/CrossIcon';
 import EditIcon from './icons/EditIcon';
-import NotificationPermissionBanner from './NotificationPermissionBanner';
 
 interface DashboardProps {
   subjects: Subject[];
   attendanceRecords: AttendanceRecord[];
   onMarkAttendance: (subjectId: string, status: AttendanceStatus) => void;
   onEditSubject: (subjectId: string) => void;
-  notificationPermission: NotificationPermission;
-  onGrantNotificationPermission: () => void;
 }
 
 const formatTime = (time: string) => {
@@ -35,7 +32,7 @@ const AttendanceActions: React.FC<{
     return (
       <div
         className={`text-center font-bold text-sm py-2 rounded-lg col-span-2 ${
-          todaysRecord.status === AttendanceStatus.Present ? 'bg-green-900/50 text-green-300' : 'bg-red-900/50 text-red-300'
+          todaysRecord.status === AttendanceStatus.Present ? 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300'
         }`}
       >
         {todaysRecord.status}
@@ -75,9 +72,9 @@ const SubjectCard: React.FC<{
   const attendancePercentage = totalClasses > 0 ? Math.round((attendedClasses / totalClasses) * 100) : 100;
 
   const getPercentageColor = (percentage: number) => {
-    if (percentage >= 75) return 'text-green-400';
-    if (percentage >= 50) return 'text-yellow-400';
-    return 'text-red-400';
+    if (percentage >= 75) return 'text-green-600 dark:text-green-400';
+    if (percentage >= 50) return 'text-yellow-600 dark:text-yellow-400';
+    return 'text-red-600 dark:text-red-400';
   };
   
   const scheduleString = subject.schedule
@@ -89,28 +86,28 @@ const SubjectCard: React.FC<{
   const isClassToday = subject.schedule.some(s => s.day === dayOfWeek);
 
   return (
-    <div className="bg-slate-800 rounded-lg p-4 shadow-md flex flex-col gap-3">
+    <div className="bg-white dark:bg-slate-800 rounded-lg p-4 shadow-md flex flex-col gap-3">
       <div className="grid grid-cols-3 items-start gap-4">
         <div className="col-span-2">
-            <h3 className="text-lg font-bold text-sky-300">{subject.name}</h3>
-            {isClassToday && <span className="mt-1 inline-block text-xs bg-cyan-800 text-cyan-200 px-2 py-0.5 rounded-full font-semibold">Today</span>}
+            <h3 className="text-lg font-bold text-sky-600 dark:text-sky-300">{subject.name}</h3>
+            {isClassToday && <span className="mt-1 inline-block text-xs bg-cyan-100 text-cyan-800 dark:bg-cyan-800 dark:text-cyan-200 px-2 py-0.5 rounded-full font-semibold">Today</span>}
         </div>
         <div className="col-span-1 flex flex-col items-end">
             <div className={`text-2xl font-bold ${getPercentageColor(attendancePercentage)}`}>
             {attendancePercentage}%
             </div>
             <div className="flex items-center gap-2 mt-1">
-                <button onClick={() => onEdit(subject.id)} className="text-slate-400 hover:text-sky-400 transition-colors" aria-label={`Edit ${subject.name}`}>
+                <button onClick={() => onEdit(subject.id)} className="text-slate-500 dark:text-slate-400 hover:text-sky-500 dark:hover:text-sky-400 transition-colors" aria-label={`Edit ${subject.name}`}>
                     <EditIcon className="w-5 h-5"/>
                 </button>
             </div>
         </div>
       </div>
-       <p className="text-xs text-slate-400 break-words w-full -mt-2">
+       <p className="text-xs text-slate-500 dark:text-slate-400 break-words w-full -mt-2">
           {scheduleString || 'No schedule set'}
        </p>
       <div className="grid grid-cols-3 gap-4 items-center mt-2">
-         <p className="text-sm text-slate-300 col-span-1">
+         <p className="text-sm text-slate-600 dark:text-slate-300 col-span-1">
           {attendedClasses} / {totalClasses}
         </p>
         <div className="col-span-2 grid grid-cols-2 gap-2">
@@ -122,35 +119,31 @@ const SubjectCard: React.FC<{
 };
 
 
-const Dashboard: React.FC<DashboardProps> = ({ subjects, attendanceRecords, onMarkAttendance, onEditSubject, notificationPermission, onGrantNotificationPermission }) => {
+const Dashboard: React.FC<DashboardProps> = ({ subjects, attendanceRecords, onMarkAttendance, onEditSubject }) => {
   const totalAttended = attendanceRecords.filter(r => r.status === AttendanceStatus.Present).length;
   const totalConducted = attendanceRecords.filter(r => r.status !== AttendanceStatus.Cancelled).length;
   const overallPercentage = totalConducted > 0 ? Math.round((totalAttended / totalConducted) * 100) : 100;
 
   const getPercentageColor = (percentage: number) => {
-    if (percentage >= 75) return 'text-green-400';
-    if (percentage >= 50) return 'text-yellow-400';
-    return 'text-red-400';
+    if (percentage >= 75) return 'text-green-600 dark:text-green-400';
+    if (percentage >= 50) return 'text-yellow-600 dark:text-yellow-400';
+    return 'text-red-600 dark:text-red-400';
   };
   
   return (
     <div className="p-4 space-y-4">
-      {notificationPermission === 'default' && (
-        <NotificationPermissionBanner onGrant={onGrantNotificationPermission} />
-      )}
-
-       <div className="bg-slate-800 rounded-lg p-4 shadow-md text-center">
-        <p className="text-sm font-medium text-slate-400">Overall Attendance</p>
+       <div className="bg-white dark:bg-slate-800 rounded-lg p-4 shadow-md text-center">
+        <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Overall Attendance</p>
         <p className={`text-5xl font-bold mt-1 ${getPercentageColor(overallPercentage)}`}>
           {overallPercentage}%
         </p>
-        <p className="text-sm text-slate-300 mt-2">
+        <p className="text-sm text-slate-600 dark:text-slate-300 mt-2">
           {totalAttended} / {totalConducted} classes attended
         </p>
       </div>
 
       {subjects.length === 0 ? (
-        <div className="text-center text-slate-400 mt-12">
+        <div className="text-center text-slate-500 dark:text-slate-400 mt-12">
           <p className="text-lg">No subjects added yet.</p>
           <p className="mt-2">Tap on the "Add Subject" tab to get started!</p>
         </div>

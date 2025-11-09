@@ -128,7 +128,7 @@ const AddSubject: React.FC<AddSubjectProps> = ({ subjects, setSubjects, setActiv
     <div className="p-6">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label htmlFor="subjectName" className="block text-sm font-medium text-slate-300 mb-2">
+          <label htmlFor="subjectName" className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">
             1. Subject Name
           </label>
           <input
@@ -137,13 +137,13 @@ const AddSubject: React.FC<AddSubjectProps> = ({ subjects, setSubjects, setActiv
             value={subjectName}
             onChange={(e) => setSubjectName(e.target.value)}
             placeholder="e.g., Data Structures"
-            className="w-full bg-slate-700 border border-slate-600 rounded-md px-3 py-2 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full bg-gray-100 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-md px-3 py-2 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500"
             aria-required="true"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-2">
+          <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">
             2. Select Class Days
           </label>
           <div className="grid grid-cols-4 gap-2">
@@ -155,7 +155,7 @@ const AddSubject: React.FC<AddSubjectProps> = ({ subjects, setSubjects, setActiv
                 className={`p-2 rounded-md text-sm font-semibold transition-colors duration-200 ${
                   selectedDays.includes(day)
                     ? 'bg-sky-600 text-white'
-                    : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+                    : 'bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300'
                 }`}
               >
                 {day.substring(0, 3)}
@@ -166,26 +166,26 @@ const AddSubject: React.FC<AddSubjectProps> = ({ subjects, setSubjects, setActiv
         
         {selectedDays.length > 0 && (
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">
               3. Set Class Times
             </label>
             <div className="space-y-3">
               {selectedDays.map(day => (
-                <div key={day} className="grid grid-cols-3 items-center gap-3 bg-slate-800 p-3 rounded-lg">
-                  <span className="font-semibold text-slate-200">{day}</span>
+                <div key={day} className="grid grid-cols-3 items-center gap-3 bg-gray-100 dark:bg-slate-800 p-3 rounded-lg">
+                  <span className="font-semibold text-slate-700 dark:text-slate-200">{day}</span>
                   <input
                     type="time"
                     aria-label={`Start time for ${day}`}
                     value={times[day]?.startTime || ''}
                     onChange={(e) => handleTimeChange(day, 'startTime', e.target.value)}
-                    className="w-full bg-slate-700 border border-slate-600 rounded-md px-2 py-1 text-white focus:outline-none focus:ring-1 focus:ring-sky-500"
+                    className="w-full bg-gray-200 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-md px-2 py-1 text-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-sky-500"
                   />
                   <input
                     type="time"
                     aria-label={`End time for ${day}`}
                     value={times[day]?.endTime || ''}
                     onChange={(e) => handleTimeChange(day, 'endTime', e.target.value)}
-                    className="w-full bg-slate-700 border border-slate-600 rounded-md px-2 py-1 text-white focus:outline-none focus:ring-1 focus:ring-sky-500"
+                    className="w-full bg-gray-200 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-md px-2 py-1 text-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-sky-500"
                   />
                 </div>
               ))}
@@ -197,7 +197,7 @@ const AddSubject: React.FC<AddSubjectProps> = ({ subjects, setSubjects, setActiv
         
         <button
           type="submit"
-          className="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 disabled:bg-slate-600 disabled:cursor-not-allowed"
+          className="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 disabled:bg-slate-400 dark:disabled:bg-slate-600 disabled:cursor-not-allowed"
           disabled={!subjectName || selectedDays.length === 0}
         >
           {isEditMode ? 'Update Subject' : 'Add Subject'}
@@ -206,13 +206,13 @@ const AddSubject: React.FC<AddSubjectProps> = ({ subjects, setSubjects, setActiv
 
       {subjects && subjects.length > 0 && (
         <div className="mt-12">
-            <h2 className="text-lg font-bold text-slate-300 mb-4 border-b border-slate-700 pb-2">
+            <h2 className="text-lg font-bold text-slate-600 dark:text-slate-300 mb-4 border-b border-gray-200 dark:border-slate-700 pb-2">
                 Manage Subjects
             </h2>
             <div className="space-y-3">
                 {subjects.map(subject => (
-                    <div key={subject.id} className="bg-slate-800 p-3 rounded-lg flex justify-between items-center">
-                        <span className="font-medium text-slate-200">{subject.name}</span>
+                    <div key={subject.id} className="bg-gray-100 dark:bg-slate-800 p-3 rounded-lg flex justify-between items-center">
+                        <span className="font-medium text-slate-700 dark:text-slate-200">{subject.name}</span>
                         <button
                             onClick={() => onDeleteSubject(subject.id)}
                             className="bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-1 px-3 rounded-md transition-colors"

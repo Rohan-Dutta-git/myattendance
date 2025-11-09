@@ -1,0 +1,5 @@
+{
+  "name": "College Attendance Tracker",
+  "description": "A mobile-first application for college students to monitor their daily attendance for various subjects. It features a dashboard for quick summaries, a section to add subjects, and a calendar to view attendance history, all stored locally on the device.",
+  "requestFramePermissions": []
+}

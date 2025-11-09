@@ -1,4 +1,3 @@
-
 {
   "short_name": "Attendance",
   "name": "College Attendance Tracker",
@@ -21,9 +20,9 @@
         "purpose": "any maskable"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "/",
   "scope": "/",
-  "display": "standalone",
+  "display": "fullscreen",
   "orientation": "portrait-primary",
   "theme_color": "#0f172a",
   "background_color": "#020617"
